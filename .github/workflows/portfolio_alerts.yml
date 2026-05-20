@@ -1,0 +1,22 @@
+name: Portfolio Bot
+on:
+  schedule:
+    - cron: '0 6 * * 1-5'
+    - cron: '0 8,10,12,14,16 * * 1-5'
+    - cron: '0 15 * * 5'
+  workflow_dispatch:
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - run: python "portfolio bot.py" morning
+        if: github.event.schedule == '0 6 * * 1-5' || github.event_name == 'workflow_dispatch'
+      - run: python "portfolio bot.py" alert
+        if: github.event.schedule == '0 8,10,12,14,16 * * 1-5'
+      - run: python "portfolio bot.py" weekly
+        if: github.event.schedule == '0 15 * * 5'
