@@ -14,11 +14,11 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install requests
-      - run: run: python portfolio_bot.py morning
+      - - run: python portfolio_bot.py morning
         if: github.event.schedule == '0 6 * * 1-5' || github.event_name == 'workflow_dispatch'
-      - run: run: python portfolio_bot.py alert
+      - run: python portfolio_bot.py alert
 
        if: github.event.schedule == '0 8,10,12,14,16 * * 1-5'
-      - run: python run: python portfolio_bot.py weekly
+      - run: python portfolio_bot.py weekly
 
         if: github.event.schedule == '0 15 * * 5'
